@@ -1,0 +1,43 @@
+version: '3'
+services:
+  archappl:
+    hostname: archappl
+    image: pklaus/archiver-appliance
+    #network_mode: host
+    # ^ no, we need to link this container to our example-ioc and redis-db containers
+    ports:
+     - "17665:17665"
+    # https://docs.docker.com/compose/compose-file/#volumes
+    volumes:
+     - ./storage/sts:/storage/sts
+     - ./storage/mts:/storage/mts
+     - ./storage/lts:/storage/lts
+     - ./storage/logs:/storage/logs
+    stdin_open: true
+    tty: true
+    #entrypoint: /bin/bash /opt/archappl/scripts/start.sh
+    environment:
+      #EPICS_CA_ADDR_LIST: "127.0.0.1"
+      #EPICS_CA_AUTO_ADDR_LIST: "no"
+      ARCHAPPL_PERSISTENCE_LAYER: "org.epics.archiverappliance.config.persistence.RedisPersistence"
+      ARCHAPPL_PERSISTENCE_LAYER_REDISURL: "redis-db"
+    links: 
+     - redis-db
+     - example-ioc
+
+  redis-db:
+    image: redis
+    volumes:
+      - ./storage/db:/data
+    command: redis-server --appendonly yes
+
+  example-ioc:
+    image: pklaus/epics_base:7.0.2.2_debian
+    stdin_open: true
+    tty: true
+    working_dir: /epics/iocs/example/iocBoot/iocEXAMPLE
+    expose:
+      - "5064-5065/udp"
+      - "5064-5065"
+    restart: always
+    command: ./st.cmd
