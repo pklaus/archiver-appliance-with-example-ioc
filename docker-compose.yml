@@ -22,6 +22,8 @@ services:
       #EPICS_CA_AUTO_ADDR_LIST: "no"
       ARCHAPPL_PERSISTENCE_LAYER: "org.epics.archiverappliance.config.persistence.RedisPersistence"
       ARCHAPPL_PERSISTENCE_LAYER_REDISURL: "redis-db"
+    depends_on:
+     - redis-db
     links: 
      - redis-db
      - example-ioc
