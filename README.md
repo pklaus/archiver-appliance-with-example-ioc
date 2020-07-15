@@ -1,9 +1,9 @@
 # Docker-Compose Deployment of Archiver Appliance with Example IOC
 
 This respository in an example deployment of
-a [Docker image of the EPICS Archiver Appliance][]
-(with [this Dockerfile][Dockerfile]),
-an EPICS example softIoc and a Redis database.
+my Docker image of the EPICS Archiver Appliance
+(on [Docker Hub][] and on [Github][])
+bundled together with an EPICS example IOC and a Redis database.
 
 Redis is used for the persistance of the appliance configuration,
 see the [RedisPersistence class][].
@@ -61,5 +61,5 @@ root:calc3
 ```
 
 [RedisPersistence class]: https://slacmshankar.github.io/epicsarchiver_docs/api/org/epics/archiverappliance/config/persistence/RedisPersistence.html
-[Docker image of the EPICS Archiver Appliance]: https://hub.docker.com/r/pklaus/archiver-appliance
-[Dockerfile]: https://github.com/pklaus/docker-archiver-appliance
+[Docker Hub]: https://hub.docker.com/r/pklaus/archiver-appliance
+[Github]: https://github.com/pklaus/docker-archiver-appliance
